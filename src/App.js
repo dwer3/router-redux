@@ -1,26 +1,28 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Nav from './components/Nav/Nav'
+import LinksView from './views/LinksView/LinksView';
+import NotesView from './views/NotesView/NotesView';
+import AddView from './views/AddView/AddView';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom';
+
+import { Provider } from 'react-redux';
+import store from './store';
+
+const App = () =>  (
+  <Provider store={store}>
+    <BrowserRouter>
+      <Nav />
+      <Switch>
+        <Route exact path="/" render={() => <Redirect to="/links"/>}/>
+        <Route path="/links" component={LinksView} />
+        <Route path="/notes">
+          <NotesView />
+        </Route>
+        <Route path="/add" component={AddView} />
+      </Switch>
+    </BrowserRouter>
+  </Provider>
+)
 
 export default App;
